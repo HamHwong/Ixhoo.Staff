@@ -5,7 +5,7 @@ function getCookie(name) {
     return "";
   else {
     var cookiesSlice = cookies.substring(cookiesStart)
-    var cookieString = cookiesSlice.substring(0, cookiesSlice.indexOf(";"))
+    var cookieString = cookiesSlice.indexOf(";") < 0 ? cookiesSlice : cookiesSlice.substring(0, cookiesSlice.indexOf(";"))
     return unescape(cookieString.split("="))
   }
 };

@@ -2,10 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/login'
-import {getCookie} from '@/utils/cookie.js';
+import index from '@/components/index'
+import {
+  getCookie,
+  setCookie,
+  removeCookie
+} from '../utils/cookie.js';
 
 Vue.use(Router)
-// Vue.use(getCookie)
 
 const router = new Router({
   routes: [{
@@ -17,6 +21,14 @@ const router = new Router({
       path: '/helloworld',
       name: 'HelloWorld',
       component: HelloWorld,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/',
+      name: 'Index',
+      component: index,
       meta: {
         requireAuth: true
       }
@@ -32,9 +44,6 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         path: '/login'
-        // query: {
-        //   redirect: to.fullPath
-        // } // 将跳转的路由path作为参数，登录成功后跳转到该路由
       })
     }
   } else {

@@ -34,11 +34,17 @@ export default {
     };
   },
   created: function() {
+    if (this.checkLogin()) {
+      this.$router.push("/index");
+    }
     this.resotre();
   },
   methods: {
     resotre() {
       this.message = "欢迎登陆Ixhoo";
+    },
+    checkLogin() {
+      return this.getCookie("token") ? true : false;
     },
     login() {
       this.loginStatus = "Logining";
@@ -51,10 +57,9 @@ export default {
           this.username = response.user.name;
           this.message = this.username + "," + response.message;
           this.loginStatus = "Logined";
-          // this.setCookie("token",this.token);
-          this.getCookie("token");
+          this.setCookie("token", response.token, 1000000);
           setTimeout(() => {
-            this.$router.push("/helloworld");
+            this.$router.push("/");
           }, 1000);
         }, 500);
       });
